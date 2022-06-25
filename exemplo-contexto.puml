@@ -1,0 +1,21 @@
+@startuml Exemplo básico
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+Person(professor, "Professor", "Acessar o sistema de chamadas") 
+System_Boundary(c1, "Contexto do sistema de chamadas") {
+    System(mobile, "Sistema de chamadas Mobile", "Aplicativo é responsável pelas chamadas dos alunos")
+    System(site, "Sistema de chamadas Web", "Site é responsável pelas chamadas dos alunos")
+    System(api, "API do sistema de chamadas", "API responsável por gerenciar as chamadas dos alunos")
+    System_Ext(api_aluno, "API de alunos", "API responsável pelos alunos")
+  
+}
+
+Rel(professor, mobile, "Acessa")
+Rel(professor, site, "Acessa")
+Rel(site, api, "Acessa")
+Rel(mobile, api, "Acessa")
+Rel(api, api_aluno, "Acessa")
+
+LAYOUT_WITH_LEGEND()
+
+@enduml
