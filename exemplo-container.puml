@@ -1,0 +1,27 @@
+@startuml Exemplo básico
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+!define DEVICONS https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/devicons
+!define FONTAWESOME https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/font-awesome-5
+!include DEVICONS/mysql.puml
+
+Person(professor, "Professor", "Acessar o sistema de chamadas") 
+System_Boundary(c1, "Contexto do sistema de chamadas") {
+    Container(mobile, "Sistema de chamadas Mobile", "React Native", "Aplicativo é responsável pelas chamadas dos alunos")
+    Container(site, "Sistema de chamadas Web", "ReactJS", "Site é responsável pelas chamadas dos alunos")
+    Container(api, "API do sistema de chamadas", "Spring Boot", "API responsável por gerenciar as chamadas dos alunos")
+    Container_Ext(api_aluno, "API de alunos", "Quarkus", "API responsável pelos alunos")
+    ContainerDb(db, "Database", "MYSQL", "Banco de dados responsável pela chamada", $sprite="mysql")
+
+}
+
+Rel(professor, mobile, "Acessa")
+Rel(professor, site, "Acessa")
+Rel(site, api, "Acessa", "HTTP REST")
+Rel(mobile, api, "Acessa", "HTTP REST")
+Rel(api, db,  "Acessa")
+Rel(api, api_aluno, "Acessa", "Grpc")
+
+LAYOUT_WITH_LEGEND()
+
+@enduml
